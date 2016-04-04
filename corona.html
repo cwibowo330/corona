@@ -1,0 +1,41 @@
+PHYSICS NOTES
+
+MAKES PLAYER JUMP
+
+physics.addBody(player, "dynamic", { density=3.0, friction=0.5, bounce=0.3 })
+
+local function jumpPlayer(event)
+    player:applyLinearImpulse( -50, -250, player.x, player.y )
+end
+player:addEventListener("touch", jumpPlayer)
+
+
+-- makes physics boundaries viewable
+    physics.setDrawMode("hybrid")
+
+
+-- creates invisible physics object
+
+floor = display.newRect(sceneGroup, 1000, _B - 75, 1400, 100)
+    physics.addBody(floor, "static", {friction=0.5, bounce=0.3})
+
+
+BUTTONS
+
+local function onRightButton (event)
+        if (event.phase == "ended") then
+            audio.play(_CLICK)
+            player.x = player.x + 20
+        end
+    end
+    
+rightButton = widget.newButton {
+        width = 125,
+        height = 125,
+        defaultFile = "images/gamescreen/ctrl-right-btn.png",
+        overFile = "images/menuscreen/btn_play_over.png",
+        onEvent = onRightButton
+    }
+    rightButton.x = leftButton.width * 2
+    rightButton.y = _B * 0.85
+    sceneGroup:insert(rightButton) 
